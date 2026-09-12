@@ -12,6 +12,7 @@
 <layout:head>
 	<script type="text/javascript" src="static/scripts/biblivre.multi_schema.js"></script>
 	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.multi_schema.css" />
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body multiPart="true">

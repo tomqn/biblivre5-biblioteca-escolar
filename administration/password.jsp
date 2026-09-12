@@ -5,6 +5,7 @@
 
 <layout:head>
 	<script type="text/javascript" src="static/scripts/biblivre.administration.password.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body>

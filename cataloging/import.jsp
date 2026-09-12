@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.cataloging.import.css" />
 
 	<script type="text/javascript" src="static/scripts/biblivre.cataloging.import.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body multiPart="true">

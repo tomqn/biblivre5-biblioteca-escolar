@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.administration.css" />
 	
 	<script type="text/javascript" src="static/scripts/biblivre.administration.maintenance.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body>

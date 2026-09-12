@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.administration.customization.css" />	
 
 	<script type="text/javascript" src="static/scripts/biblivre.administration.translations.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body multiPart="true">

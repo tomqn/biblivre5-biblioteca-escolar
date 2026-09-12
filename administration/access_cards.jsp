@@ -25,6 +25,7 @@
 		AccessCardsInput.root = '#access_cards';
 		AccessCardsInput.search = AccessCardsSearch;
 	</script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body>

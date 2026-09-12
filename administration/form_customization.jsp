@@ -21,6 +21,7 @@
 	
 	<script>FormCustomization.materialTypes = <%= MaterialType.toJavascriptArray()%>;</script>
 	
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body multiPart="true">

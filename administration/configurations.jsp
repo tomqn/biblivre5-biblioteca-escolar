@@ -20,6 +20,7 @@
 	<script>
 		Configurations.businessDays = '<%= Constants.CONFIG_BUSINESS_DAYS %>';
 	</script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body>

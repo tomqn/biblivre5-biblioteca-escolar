@@ -1,0 +1,1233 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   Biblivre — camada de tema moderno
+   Carregada DEPOIS de biblivre.core.css e dos CSS de cada módulo.
+   Não altera nomes de classes nem estrutura de HTML: apenas reestiliza os
+   seletores existentes, seguindo padrões de catálogos internacionais
+   (Koha, VuFind, Primo): layout fluido, tipografia legível, cartões de
+   resultado, facetas, foco visível e suporte a telas pequenas.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens de design
+   -------------------------------------------------------------------------- */
+:root {
+  --bb-font-sans: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --bb-brand-900: #0f172a;
+  --bb-brand-800: #172554;
+  --bb-brand-700: #1d4ed8;
+  --bb-brand-600: #2563eb;
+  --bb-brand-500: #3b82f6;
+  --bb-brand-100: #dbeafe;
+  --bb-brand-50: #eff6ff;
+
+  --bb-ink: #0f172a;
+  --bb-ink-soft: #334155;
+  --bb-ink-muted: #64748b;
+
+  --bb-surface: #ffffff;
+  --bb-surface-alt: #f8fafc;
+  --bb-page: #f1f5f9;
+  --bb-line: #e2e8f0;
+  --bb-line-strong: #cbd5e1;
+
+  --bb-success: #15803d;
+  --bb-success-bg: #dcfce7;
+  --bb-warning: #b45309;
+  --bb-warning-bg: #fef3c7;
+  --bb-danger: #b91c1c;
+  --bb-danger-bg: #fee2e2;
+  --bb-info-bg: #e0f2fe;
+
+  --bb-radius-sm: 6px;
+  --bb-radius: 10px;
+  --bb-radius-lg: 16px;
+  --bb-radius-pill: 999px;
+
+  --bb-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --bb-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+  --bb-shadow-lg: 0 18px 40px rgba(15, 23, 42, 0.16);
+
+  --bb-space-1: 4px;
+  --bb-space-2: 8px;
+  --bb-space-3: 12px;
+  --bb-space-4: 16px;
+  --bb-space-5: 24px;
+  --bb-space-6: 32px;
+
+  --bb-content-width: 1180px;
+  --bb-focus: 0 0 0 3px rgba(37, 99, 235, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   2. Base: tipografia, rolagem e página
+   -------------------------------------------------------------------------- */
+html,
+body {
+  overflow: visible;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--bb-font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--bb-ink);
+  background: var(--bb-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--bb-brand-700);
+}
+
+a:hover {
+  color: var(--bb-brand-800);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+::selection {
+  background: var(--bb-brand-100);
+}
+
+/* Foco visível e consistente (WCAG 2.2 – 2.4.11) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible,
+.combo_wrap:focus-visible,
+ul.tabs_head li:focus-visible {
+  outline: 2px solid var(--bb-brand-600);
+  outline-offset: 2px;
+  border-radius: var(--bb-radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Cabeçalho, menu e navegação
+   -------------------------------------------------------------------------- */
+#header {
+  height: auto;
+  min-height: 88px;
+  padding-bottom: 46px;
+  background-image: linear-gradient(135deg, var(--bb-brand-900) 0%, #1e293b 55%, var(--bb-brand-800) 100%);
+  border-bottom: 0;
+  box-shadow: var(--bb-shadow);
+}
+
+#logo_biblivre {
+  margin: 14px 20px;
+}
+
+#title {
+  padding-top: 18px;
+}
+
+#title h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+#title h1 a,
+#title h2 {
+  color: #e2e8f0;
+  text-shadow: none;
+}
+
+#title h2 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+#clock {
+  color: #cbd5e1;
+  text-shadow: none;
+}
+
+#menu {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(var(--bb-content-width), calc(100% - 32px));
+  max-width: var(--bb-content-width);
+  margin-left: 0;
+  transform: translateX(-50%);
+  height: auto;
+  min-height: 44px;
+  line-height: 40px;
+  font-size: 15px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: saturate(140%) blur(6px);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-bottom: 0;
+  border-radius: var(--bb-radius) var(--bb-radius) 0 0;
+  box-shadow: var(--bb-shadow);
+}
+
+#menu > ul > li {
+  padding: 0 14px;
+  border-radius: var(--bb-radius-sm);
+  transition: background-color 0.15s ease;
+}
+
+#menu > ul > li:hover {
+  background: rgba(59, 130, 246, 0.22);
+}
+
+#menu .submenu {
+  background: #0f172a;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 0 0 var(--bb-radius) var(--bb-radius);
+  box-shadow: var(--bb-shadow-lg);
+  overflow: hidden;
+  padding: 6px 0;
+  margin-left: -14px;
+}
+
+#menu .submenu .disabled,
+#menu .submenu a {
+  border: 0;
+  font-size: 14px;
+  padding: 2px 18px;
+}
+
+#menu .submenu a:hover {
+  background: var(--bb-brand-700);
+}
+
+#menu input {
+  height: 26px;
+  border-radius: var(--bb-radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(255, 255, 255, 0.96);
+  padding: 0 8px;
+}
+
+#menu button {
+  background: transparent;
+  border-radius: var(--bb-radius-sm);
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+#menu button:hover {
+  background: rgba(59, 130, 246, 0.22);
+}
+
+#slider_area,
+#slider {
+  display: none;
+}
+
+#notifications {
+  background: var(--bb-surface);
+  border-bottom: 1px solid var(--bb-line);
+  padding: 10px 0;
+}
+
+#breadcrumb,
+#messages,
+#content,
+#copyright {
+  width: min(var(--bb-content-width), calc(100% - 32px));
+  max-width: var(--bb-content-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#breadcrumb {
+  padding: 0;
+  font-size: 13px;
+  color: var(--bb-ink-muted);
+}
+
+#breadcrumb span {
+  color: var(--bb-ink);
+}
+
+#content_outer {
+  overflow-y: auto;
+  background: var(--bb-page);
+}
+
+#content_inner {
+  margin: var(--bb-space-5) 0;
+  padding: var(--bb-space-5);
+  background: var(--bb-surface);
+  border: 1px solid var(--bb-line);
+  border-radius: var(--bb-radius-lg);
+  box-shadow: var(--bb-shadow-sm);
+}
+
+#copyright {
+  color: var(--bb-ink-muted);
+  font-size: 12px;
+  padding-bottom: var(--bb-space-4);
+}
+
+/* --------------------------------------------------------------------------
+   4. Títulos de página, ajuda e blocos
+   -------------------------------------------------------------------------- */
+.page_title .text {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--bb-ink);
+  text-shadow: none;
+}
+
+.page_title .contains_subtext .subtext {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bb-ink-muted);
+}
+
+.page_help,
+.form_help {
+  background: var(--bb-brand-50);
+  border: 1px solid var(--bb-brand-100);
+  border-left: 4px solid var(--bb-brand-500);
+  border-radius: var(--bb-radius);
+  color: var(--bb-ink-soft);
+  font-size: 14px;
+  padding: var(--bb-space-4) var(--bb-space-5);
+  margin-bottom: var(--bb-space-4);
+}
+
+.block,
+fieldset.block,
+.popup fieldset {
+  background: var(--bb-surface);
+  border: 1px solid var(--bb-line);
+  border-radius: var(--bb-radius);
+  padding: var(--bb-space-4);
+}
+
+.block legend,
+fieldset > legend {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--bb-ink);
+  padding: 0 var(--bb-space-2);
+}
+
+.description {
+  color: var(--bb-ink-soft);
+  font-size: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Botões
+   -------------------------------------------------------------------------- */
+a.button,
+a.main_button,
+a.danger_button,
+a.faded_button {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  min-height: 36px;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--bb-radius-sm);
+  border: 1px solid transparent;
+  border-top-width: 1px;
+  text-align: center;
+  text-shadow: none;
+  box-shadow: var(--bb-shadow-sm);
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+}
+
+a.button:hover,
+a.main_button:hover,
+a.danger_button:hover,
+a.faded_button:hover {
+  text-decoration: none;
+  box-shadow: var(--bb-shadow);
+}
+
+a.button:active,
+a.main_button:active,
+a.danger_button:active,
+a.faded_button:active {
+  transform: translateY(1px);
+}
+
+a.button {
+  background-color: var(--bb-surface);
+  border-color: var(--bb-line-strong);
+  color: var(--bb-ink-soft);
+}
+
+a.button:hover {
+  background-color: var(--bb-surface-alt);
+  border-color: var(--bb-brand-500);
+  color: var(--bb-brand-700);
+}
+
+a.main_button {
+  background-color: var(--bb-brand-600);
+  border-color: var(--bb-brand-600);
+  color: #ffffff;
+}
+
+a.main_button:hover {
+  background-color: var(--bb-brand-700);
+  border-color: var(--bb-brand-700);
+  color: #ffffff;
+}
+
+a.danger_button {
+  background-color: var(--bb-danger);
+  border-color: var(--bb-danger);
+  color: #ffffff;
+}
+
+a.danger_button:hover {
+  background-color: #991b1b;
+  border-color: #991b1b;
+  color: #ffffff;
+}
+
+a.faded_button {
+  background-color: var(--bb-surface-alt);
+  border-color: var(--bb-line);
+  color: var(--bb-ink-muted);
+}
+
+a.faded_button:hover {
+  background-color: var(--bb-line);
+  color: var(--bb-ink-soft);
+}
+
+a.button.disabled,
+a.main_button.disabled,
+a.danger_button.disabled,
+a.faded_button.disabled {
+  background-color: var(--bb-surface-alt);
+  border-color: var(--bb-line);
+  color: var(--bb-line-strong);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+a.button.disabled:hover,
+a.main_button.disabled:hover,
+a.danger_button.disabled:hover,
+a.faded_button.disabled:hover {
+  background-color: var(--bb-surface-alt);
+  border-color: var(--bb-line);
+  box-shadow: none;
+  transform: none;
+}
+
+a.button.center,
+a.main_button.center,
+a.danger_button.center,
+a.faded_button.center {
+  padding: 8px 20px;
+}
+
+.footer_buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bb-space-2);
+  align-items: center;
+}
+
+.footer_buttons a {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   6. Formulários
+   -------------------------------------------------------------------------- */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="date"],
+textarea,
+select {
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--bb-ink);
+  background: var(--bb-surface);
+  border: 1px solid var(--bb-line-strong);
+  border-radius: var(--bb-radius-sm);
+  padding: 8px 10px;
+  box-shadow: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+input[type="text"]:hover,
+input[type="password"]:hover,
+textarea:hover,
+select:hover {
+  border-color: var(--bb-brand-500);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--bb-brand-600);
+  box-shadow: var(--bb-focus);
+  outline: none;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background: var(--bb-surface-alt);
+  color: var(--bb-ink-muted);
+}
+
+::placeholder {
+  color: #94a3b8;
+}
+
+.big_input {
+  height: auto;
+  min-height: 42px;
+  font-size: 16px;
+}
+
+.small_input {
+  min-height: 36px;
+}
+
+label,
+.search_label,
+div.label,
+.biblivre_form_body .label,
+.biblivre_marc_body .label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bb-ink-soft);
+  padding-left: 0;
+}
+
+.combo_wrap {
+  background: var(--bb-surface);
+  border: 1px solid var(--bb-line-strong);
+  border-radius: var(--bb-radius-sm);
+  box-shadow: none;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.combo_wrap.hover,
+.combo_wrap.active {
+  border-color: var(--bb-brand-600);
+  box-shadow: var(--bb-focus);
+}
+
+.combo_wrap .combo_text {
+  font-size: 14px;
+  color: var(--bb-ink);
+  text-shadow: none;
+}
+
+.combo_wrap .combo_list {
+  border: 1px solid var(--bb-line);
+  border-radius: var(--bb-radius-sm);
+  box-shadow: var(--bb-shadow);
+  background: var(--bb-surface);
+  overflow: hidden;
+}
+
+.combo_wrap .combo_row {
+  font-size: 14px;
+  padding: 6px 10px;
+  border: 0;
+}
+
+.combo_wrap .combo_row.hover {
+  background: var(--bb-brand-50);
+  color: var(--bb-brand-800);
+}
+
+.form_error,
+.value_error {
+  color: var(--bb-danger);
+  font-size: 13px;
+}
+
+.value_error input,
+.value_error textarea,
+.value_error select {
+  border-color: var(--bb-danger);
+}
+
+/* --------------------------------------------------------------------------
+   7. Abas
+   -------------------------------------------------------------------------- */
+ul.tabs_head li {
+  background: transparent;
+  background-image: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: var(--bb-radius-sm) var(--bb-radius-sm) 0 0;
+  color: var(--bb-ink-muted);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 38px;
+  margin-right: var(--bb-space-1);
+  padding: 0 16px;
+}
+
+ul.tabs_head li:hover {
+  color: var(--bb-brand-700) !important;
+  background: var(--bb-brand-50);
+}
+
+ul.tabs_head li.tab_selected {
+  background: transparent !important;
+  color: var(--bb-brand-700) !important;
+  border-bottom-color: var(--bb-brand-600);
+}
+
+.tabs_body {
+  background: var(--bb-surface);
+  border: 1px solid var(--bb-line);
+  border-radius: 0 var(--bb-radius) var(--bb-radius) var(--bb-radius);
+  padding: var(--bb-space-5);
+  top: 0;
+  margin-top: -1px;
+}
+
+/* --------------------------------------------------------------------------
+   8. Paginação
+   -------------------------------------------------------------------------- */
+.paging_bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bb-space-1);
+  margin: var(--bb-space-4) 0;
+}
+
+a.paging,
+span.paging {
+  font-size: 14px;
+  line-height: 20px;
+  min-width: 36px;
+  padding: 7px 10px;
+  border-radius: var(--bb-radius-sm);
+  border: 1px solid transparent;
+  color: var(--bb-ink-soft);
+  text-shadow: none;
+}
+
+a.paging:hover {
+  background: var(--bb-brand-50);
+  border-color: var(--bb-brand-100);
+  color: var(--bb-brand-700);
+  text-decoration: none;
+}
+
+a.paging.actual_page,
+span.paging.actual_page {
+  background: var(--bb-brand-600);
+  background-image: none;
+  border: 1px solid var(--bb-brand-600);
+  color: #ffffff;
+  text-shadow: none;
+  font-weight: 700;
+}
+
+a.paging_button {
+  background: var(--bb-surface);
+  background-image: none;
+  border: 1px solid var(--bb-line-strong);
+  border-radius: var(--bb-radius-sm);
+  color: var(--bb-ink-soft);
+  text-shadow: none;
+  height: auto;
+  line-height: 20px;
+  padding: 7px 12px;
+}
+
+a.paging_button:hover {
+  border-color: var(--bb-brand-500);
+  color: var(--bb-brand-700);
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   9. Mensagens do sistema
+   -------------------------------------------------------------------------- */
+#messages .message,
+#messages .message > div {
+  border: 0;
+  border-radius: var(--bb-radius);
+  background-image: none;
+  font-size: 14px;
+}
+
+#messages .message {
+  box-shadow: var(--bb-shadow-sm);
+  margin-bottom: var(--bb-space-2);
+  overflow: hidden;
+}
+
+#messages .message > div {
+  padding: var(--bb-space-3) var(--bb-space-4);
+  border-left: 4px solid transparent;
+}
+
+#messages .message.normal > div {
+  background: var(--bb-info-bg);
+  border-left-color: var(--bb-brand-500);
+  color: #0c4a6e;
+}
+
+#messages .message.success > div {
+  background: var(--bb-success-bg);
+  border-left-color: var(--bb-success);
+  color: #14532d;
+}
+
+#messages .message.warning > div {
+  background: var(--bb-warning-bg);
+  border-left-color: var(--bb-warning);
+  color: #78350f;
+}
+
+#messages .message.error > div {
+  background: var(--bb-danger-bg);
+  border-left-color: var(--bb-danger);
+  color: #7f1d1d;
+}
+
+/* --------------------------------------------------------------------------
+   10. Tabelas de registro
+   -------------------------------------------------------------------------- */
+.record_fields {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+
+.record_fields td.label {
+  width: 210px;
+  color: var(--bb-ink-muted);
+  font-weight: 600;
+  vertical-align: top;
+  padding: 10px var(--bb-space-4) 10px 0;
+  border-bottom: 1px solid var(--bb-line);
+}
+
+.record_fields td.value {
+  color: var(--bb-ink);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bb-line);
+}
+
+.record_fields tr:last-child td {
+  border-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   11. Busca: caixa, facetas e resultados (padrão OPAC internacional)
+   -------------------------------------------------------------------------- */
+.search_box {
+  background: var(--bb-surface-alt);
+  border: 1px solid var(--bb-line);
+  border-radius: var(--bb-radius);
+  padding: var(--bb-space-4);
+  margin-bottom: var(--bb-space-5);
+}
+
+.search_box .simple_search {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--bb-space-3);
+  height: auto;
+}
+
+.search_box .simple_search .query,
+.search_box .simple_search .distributed_query,
+.search_box .simple_search .wide_query {
+  position: static;
+  flex: 1 1 320px;
+  min-width: 240px;
+}
+
+.search_box .simple_search .query input,
+.search_box .simple_search .distributed_query input,
+.search_box .simple_search .wide_query input {
+  width: 100%;
+}
+
+.search_box .simple_search .buttons,
+.search_box .simple_search .attributes {
+  position: static;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--bb-space-2);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.search_box .simple_search .buttons .main_button,
+.search_box .simple_search .attributes .main_button {
+  margin-left: 0;
+  width: auto;
+  min-width: 120px;
+}
+
+.search_box .advanced_search .search_entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bb-space-3);
+  align-items: flex-end;
+  margin-top: var(--bb-space-3);
+}
+
+.search_box .advanced_search .search_entry .operator,
+.search_box .advanced_search .search_entry .query,
+.search_box .advanced_search .search_entry .field {
+  float: none;
+  margin: 0;
+}
+
+.search_box .advanced_search .search_entry .operator {
+  width: 120px;
+}
+
+.search_box .advanced_search .search_entry .query {
+  flex: 1 1 280px;
+}
+
+.search_box .advanced_search .search_entry .query .big_input,
+.search_box .advanced_search .search_entry:first-child .query .big_input {
+  width: 100%;
+  height: auto;
+}
+
+.search_box .advanced_search .search_entry .field {
+  width: 220px;
+}
+
+.search_box .advanced_search .buttons .main_button {
+  width: auto;
+  min-width: 120px;
+}
+
+.search_box .filter_search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bb-space-4);
+  margin-top: var(--bb-space-3);
+}
+
+.search_box .filter_search .fleft {
+  float: none;
+}
+
+/* Facetas / grupos de indexação */
+.search_ordering_bar {
+  border: 0;
+  border-bottom: 1px solid var(--bb-line);
+  padding-bottom: var(--bb-space-2);
+  margin-bottom: var(--bb-space-3);
+}
+
+.search_indexing_groups {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bb-space-1);
+  margin: 0;
+  font-size: 13px;
+}
+
+.search_indexing_groups div {
+  float: none;
+  padding: 6px 12px;
+  border-radius: var(--bb-radius-pill);
+}
+
+.search_indexing_groups a,
+.search_indexing_groups .name {
+  color: var(--bb-ink-soft);
+}
+
+.search_indexing_groups .selected {
+  background: var(--bb-brand-600);
+}
+
+.search_indexing_groups .selected .name,
+.search_indexing_groups .selected .value {
+  color: #ffffff;
+}
+
+.search_indexing_groups .hspacer {
+  display: none;
+}
+
+.search_sort_by {
+  display: flex;
+  align-items: center;
+  gap: var(--bb-space-2);
+  margin: 0;
+  font-size: 13px;
+}
+
+.select_bar {
+  margin-bottom: var(--bb-space-2);
+}
+
+/* Cartões de resultado */
+.search_results .result {
+  position: relative;
+  background: var(--bb-surface);
+  border: 1px solid var(--bb-line);
+  border-radius: var(--bb-radius);
+  box-shadow: var(--bb-shadow-sm);
+  padding: var(--bb-space-4);
+  margin-bottom: var(--bb-space-3);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.search_results .result:hover {
+  border-color: var(--bb-brand-500);
+  box-shadow: var(--bb-shadow);
+}
+
+.search_results .result.odd,
+.search_results .result.even {
+  background: var(--bb-surface);
+}
+
+.search_results .result.odd .record,
+.search_results .result.even .record,
+.clone.odd .record,
+.clone.even .record {
+  background: transparent;
+}
+
+.search_results .result.odd .buttons,
+.search_results .result.even .buttons,
+.clone.odd .buttons,
+.clone.even .buttons {
+  background: transparent;
+  padding: 0;
+}
+
+.search_results .result .record {
+  padding: 0;
+  font-size: 14px;
+  color: var(--bb-ink-soft);
+  line-height: 1.7;
+}
+
+.search_results .result .record label {
+  color: var(--bb-ink-muted);
+  font-weight: 600;
+}
+
+.search_results .result .buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bb-space-2);
+  margin-left: var(--bb-space-4);
+}
+
+.search_results .result .result_overlay {
+  border-radius: var(--bb-radius);
+}
+
+.search_results .result.selected,
+.search_results .result.open {
+  border-color: var(--bb-brand-600);
+  box-shadow: var(--bb-focus);
+}
+
+.no_results,
+.no-results {
+  color: var(--bb-ink-muted);
+  font-size: 14px;
+  text-align: center;
+  padding: var(--bb-space-6) var(--bb-space-4);
+  background: var(--bb-surface-alt);
+  border: 1px dashed var(--bb-line-strong);
+  border-radius: var(--bb-radius);
+}
+
+/* --------------------------------------------------------------------------
+   12. Popups, overlays e barras de progresso
+   -------------------------------------------------------------------------- */
+.popup {
+  background: var(--bb-surface);
+  border: 0;
+  border-radius: var(--bb-radius-lg);
+  box-shadow: var(--bb-shadow-lg);
+  padding: var(--bb-space-5);
+}
+
+.popup legend {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.popup .buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bb-space-2);
+  justify-content: flex-end;
+}
+
+.overlay,
+.loading_overlay {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.progress_bar,
+.progress_bar_outer {
+  border-radius: var(--bb-radius-pill);
+  overflow: hidden;
+  background: var(--bb-line);
+  border: 0;
+}
+
+.progress_bar_inner {
+  background: var(--bb-brand-600);
+  background-image: none;
+}
+
+.xclose {
+  color: var(--bb-ink-muted);
+  border-radius: var(--bb-radius-sm);
+}
+
+.xclose:hover,
+.xclose:focus {
+  color: var(--bb-danger);
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsivo
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  #content_inner {
+    padding: var(--bb-space-4);
+  }
+
+  .record_fields td.label {
+    width: 160px;
+  }
+}
+
+@media (max-width: 820px) {
+  #header {
+    height: auto;
+    min-height: 0;
+    padding: var(--bb-space-3) 0 0;
+  }
+
+  #logo_biblivre,
+  #logo_support,
+  #logo_sponsor,
+  #clock {
+    display: none;
+  }
+
+  #logo_biblivre_small {
+    display: block;
+  }
+
+  #title {
+    float: none;
+    position: static;
+    width: auto;
+    padding: 0 var(--bb-space-4) var(--bb-space-3);
+    text-align: left;
+  }
+
+  #language_selection {
+    position: static;
+    float: right;
+    margin: 0 var(--bb-space-4) var(--bb-space-2) 0;
+  }
+
+  #menu {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  #menu > ul {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  #menu > ul > li {
+    float: none;
+    flex: 0 0 auto;
+  }
+
+  #menu .inputs,
+  #menu .login,
+  #menu .logout {
+    float: none;
+  }
+
+  #breadcrumb,
+  #messages,
+  #content,
+  #copyright {
+    width: calc(100% - 24px);
+  }
+
+  .page_title {
+    float: none;
+  }
+
+  .page_navigation,
+  .page_title_buttons {
+    float: none;
+    width: 100%;
+  }
+
+  .search_results .result .buttons {
+    float: none;
+    flex-direction: row;
+    margin: 0 0 var(--bb-space-3) 0;
+  }
+
+  .tabs_body {
+    padding: var(--bb-space-4);
+  }
+
+  ul.tabs_head li {
+    padding: 0 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    font-size: 15px;
+  }
+
+  #content_inner {
+    padding: var(--bb-space-3);
+    border-radius: var(--bb-radius);
+  }
+
+  .page_title .text {
+    font-size: 19px;
+  }
+
+  .search_box {
+    padding: var(--bb-space-3);
+  }
+
+  .search_box .simple_search .buttons,
+  .search_box .simple_search .attributes {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .search_box .simple_search .buttons .main_button {
+    flex: 1 1 100%;
+  }
+
+  .search_box .advanced_search .search_entry .operator,
+  .search_box .advanced_search .search_entry .field {
+    width: 100%;
+  }
+
+  .record_fields,
+  .record_fields tbody,
+  .record_fields tr,
+  .record_fields td.label,
+  .record_fields td.value {
+    display: block;
+    width: auto;
+  }
+
+  .record_fields td.label {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .footer_buttons a,
+  .popup .buttons a {
+    flex: 1 1 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Impressão
+   -------------------------------------------------------------------------- */
+@media print {
+  #header,
+  #menu,
+  #notifications,
+  #copyright,
+  .search_box,
+  .paging_bar,
+  .select_bar {
+    display: none !important;
+  }
+
+  #content_inner {
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+}
