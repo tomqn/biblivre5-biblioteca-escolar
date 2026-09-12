@@ -1,0 +1,8 @@
+.new_server {
+  padding-bottom: 12px;
+}
+.new_server .buttons {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}

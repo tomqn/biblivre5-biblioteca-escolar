@@ -1,0 +1,23 @@
+.picture {
+  margin: 0 20px 20px 5px;
+  width: 357px;
+  height: 357px;
+  overflow: hidden;
+  border: 4px solid #ebebeb;
+  filter: grayscale(100%);
+  float: left;
+  -webkit-box-shadow: 0 0 15px 2px #aaaaaa;
+  -moz-box-shadow: 0 0 15px 2px #aaaaaa;
+  -o-box-shadow: 0 0 15px 2px #aaaaaa;
+  box-shadow: 0 0 15px 2px #aaaaaa;
+}
+
+.text {
+  margin: 20px 5px 0 0;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: justify;
+}
+.text p {
+  margin-bottom: 20px;
+}
