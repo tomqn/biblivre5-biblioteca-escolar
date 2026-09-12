@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Biblivre — pré-visualização do tema moderno</title>
+
+<!-- Mesma ordem de carregamento das páginas reais do Biblivre -->
+<link rel="stylesheet" type="text/css" href="../biblivre.core.css" />
+<link rel="stylesheet" type="text/css" href="../biblivre.search.css" />
+<link rel="stylesheet" type="text/css" href="../biblivre.cataloging.css" />
+<link rel="stylesheet" type="text/css" id="modern-theme" href="../biblivre.modern.css" />
+
+<style>
+    /* Somente para a pré-visualização: as imagens do Biblivre não fazem parte deste repositório. */
+    .preview-toggle {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 9999;
+        background: #0f172a;
+        color: #fff;
+        font: 600 13px/1.4 system-ui, sans-serif;
+        padding: 10px 14px;
+        border-radius: 999px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+        cursor: pointer;
+        border: 0;
+    }
+</style>
+</head>
+<body>
+
+<div id="header">
+    <div id="title">
+        <h1><a href="#">Biblioteca Escolar</a></h1>
+        <h2>Catálogo público · Biblivre</h2>
+    </div>
+
+    <div id="menu">
+        <ul>
+            <li>Pesquisa</li>
+            <li>Circulação</li>
+            <li>Catalogação</li>
+            <li>Aquisição</li>
+            <li>Administração</li>
+            <li>Ajuda</li>
+            <li class="logout">Sair</li>
+        </ul>
+    </div>
+
+    <div id="slider_area"><div id="slider"></div></div>
+</div>
+
+<div id="notifications">
+    <div id="breadcrumb">Pesquisa &raquo; <span>Bibliográfica</span></div>
+</div>
+
+<div id="messages">
+    <div class="message success"><div>Registro salvo com sucesso.</div></div>
+    <div class="message warning"><div>Existem 3 exemplares com devolução atrasada.</div></div>
+</div>
+
+<div id="content_outer">
+<div id="content">
+<div id="content_inner">
+
+    <div class="page_help">
+        Pesquise por título, autor, assunto, ISBN ou palavra-chave. Use a busca avançada
+        para combinar campos com os operadores E / OU / E NÃO.
+    </div>
+
+    <div id="cataloging_search">
+        <div class="page_title">
+            <div class="text contains_subtext">
+                Pesquisa bibliográfica
+                <div class="subtext">Mudar para <a href="#">pesquisa avançada</a></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="search_box">
+            <div class="simple_search" style="display:flex">
+                <div class="query">
+                    <input type="text" name="query" class="big_input" placeholder="Título, autor, assunto, ISBN…" />
+                </div>
+                <div class="buttons">
+                    <label class="search_label" for="material">Tipo de material</label>
+                    <select id="material" name="material">
+                        <option>Todos</option>
+                        <option>Livro</option>
+                        <option>Periódico</option>
+                    </select>
+                    <a class="main_button">Pesquisar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="search_results_area">
+            <div class="search_ordering_bar" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap">
+                <div class="search_indexing_groups" style="display:flex">
+                    <div class="selected"><span class="name">Todos</span> <span class="value">(128)</span></div>
+                    <div><a href="#">Título</a> <span class="value">(74)</span></div>
+                    <div><a href="#">Autor</a> <span class="value">(31)</span></div>
+                    <div><a href="#">Assunto</a> <span class="value">(23)</span></div>
+                </div>
+                <div class="search_sort_by" style="display:flex">
+                    Ordenar por:
+                    <select><option>Título</option><option>Ano de publicação</option></select>
+                </div>
+            </div>
+
+            <div class="select_bar"><a class="button center">Selecionar página</a></div>
+
+            <div class="paging_bar">
+                <a class="paging_button paging_button_prev">Anterior</a>
+                <span class="paging actual_page">1</span>
+                <a class="paging">2</a>
+                <a class="paging">3</a>
+                <a class="paging">4</a>
+                <a class="paging_button paging_button_next">Próxima</a>
+            </div>
+
+            <div class="search_results_box">
+                <div class="search_results">
+                    <div class="result odd">
+                        <div class="buttons">
+                            <a class="button center">Abrir</a>
+                            <a class="button center">Selecionar</a>
+                        </div>
+                        <div class="record">
+                            <label>Título</label>: O pequeno príncipe<br />
+                            <label>Autor</label>: <a href="#">Saint-Exupéry, Antoine de</a><br />
+                            <label>Ano de publicação</label>: 2018<br />
+                            <label>Localização na estante</label>: 843 S145p<br />
+                            <label>ISBN</label>: 978-85-01-11234-5<br />
+                            <label>Assunto</label>: <a href="#">Literatura infantojuvenil</a><br />
+                            <div class="ncspacer"></div>
+                            <label>Exemplares</label>: 6 -
+                            <small>
+                                <label>disponíveis</label>: 4&#160;
+                                <label>emprestados</label>: 2&#160;
+                                <label>reservados</label>: 0
+                            </small>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="result even">
+                        <div class="buttons">
+                            <a class="button center">Abrir</a>
+                            <a class="button center">Selecionar</a>
+                        </div>
+                        <div class="record">
+                            <label>Título</label>: Mitologia grega para jovens leitores<br />
+                            <label>Autor</label>: <a href="#">Menezes, Clara</a><br />
+                            <label>Ano de publicação</label>: 2021<br />
+                            <label>Localização na estante</label>: 292 M543m<br />
+                            <label>Assunto</label>: <a href="#">Mitologia</a><br />
+                            <div class="ncspacer"></div>
+                            <label>Exemplares</label>: 3 -
+                            <small>
+                                <label>disponíveis</label>: 0&#160;
+                                <label>emprestados</label>: 3&#160;
+                                <label>reservados</label>: 1
+                            </small>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paging_bar">
+                <span class="paging actual_page">1</span>
+                <a class="paging">2</a>
+                <a class="paging">3</a>
+            </div>
+        </div>
+
+        <div class="selected_record tabs" style="display:block">
+            <ul class="tabs_head">
+                <li class="tab tab_selected">Resumo</li>
+                <li class="tab">Formulário</li>
+                <li class="tab">MARC</li>
+                <li class="tab">Exemplares</li>
+            </ul>
+
+            <div class="tabs_body">
+                <div class="tab_body tab_selected">
+                    <table class="record_fields">
+                        <tr><td class="label">Tipo de material:</td><td class="value">Livro</td></tr>
+                        <tr><td class="label">Título:</td><td class="value">O pequeno príncipe</td></tr>
+                        <tr><td class="label">Autor:</td><td class="value">Saint-Exupéry, Antoine de</td></tr>
+                        <tr><td class="label">Editora:</td><td class="value">Agir, 2018</td></tr>
+                        <tr><td class="label">Assunto:</td><td class="value">Literatura infantojuvenil</td></tr>
+                    </table>
+
+                    <div class="footer_buttons">
+                        <a class="main_button">Salvar</a>
+                        <a class="button">Exportar</a>
+                        <a class="faded_button">Duplicar</a>
+                        <a class="danger_button">Excluir</a>
+                        <a class="button disabled">Indisponível</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <fieldset class="block" style="margin-top:24px">
+            <legend>Empréstimo rápido</legend>
+            <div class="field">
+                <div class="label"><label for="leitor">Leitor</label></div>
+                <div class="value"><input id="leitor" type="text" class="big_input" placeholder="Nome ou matrícula" /></div>
+            </div>
+            <div class="field" style="margin-top:12px">
+                <div class="label"><label for="exemplar">Exemplar</label></div>
+                <div class="value"><input id="exemplar" type="text" placeholder="Código do exemplar" /></div>
+            </div>
+        </fieldset>
+    </div>
+
+</div>
+<div id="copyright">Biblivre — software livre para bibliotecas</div>
+</div>
+</div>
+
+<button class="preview-toggle" type="button" onclick="var l=document.getElementById('modern-theme'); l.disabled=!l.disabled; this.textContent = l.disabled ? 'Tema moderno: OFF' : 'Tema moderno: ON';">Tema moderno: ON</button>
+
+</body>
+</html>

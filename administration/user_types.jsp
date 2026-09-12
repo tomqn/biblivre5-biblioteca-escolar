@@ -23,6 +23,7 @@
 		UserTypeInput.root = '#user_types';
 		UserTypeInput.search = UserTypeSearch;
 	</script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body>

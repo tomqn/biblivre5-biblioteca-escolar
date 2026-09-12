@@ -75,6 +75,7 @@
 		a[onclick*="deleteReservation"] { background: #dc2626 !important; color: #ffffff !important; border-radius: 5px !important; height: 24px !important; padding: 0 8px !important; font-size: 10px !important; font-weight: 700 !important; border: none !important; }
 		.selected_highlight { background: #ffffff !important; border: 1px solid #cbd5e1 !important; border-radius: 8px !important; padding: 10px 14px !important; margin-bottom: 8px !important; }
 	</style>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <%

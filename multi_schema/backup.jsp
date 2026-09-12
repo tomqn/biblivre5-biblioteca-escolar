@@ -40,6 +40,7 @@
 		
 		Administration.setup.multiLibrary = true;
 	</script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body multiPart="true">

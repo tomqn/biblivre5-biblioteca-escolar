@@ -17,6 +17,7 @@
 	
 	<script type="text/javascript" src="static/scripts/<%= Fields.getFormFields((String) request.getAttribute("schema"), "vocabulary").getCacheFileName() %>"></script>
 	<script>Customization.formFields['vocabulary'] = ld.keyBy(CatalogingInput.formFields, 'datafield');</script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body multiPart="true">

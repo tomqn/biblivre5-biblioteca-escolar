@@ -5,6 +5,7 @@
 
 <layout:head>
 	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.search.css" />
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 

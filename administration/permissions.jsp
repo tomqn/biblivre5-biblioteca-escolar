@@ -36,6 +36,7 @@
 		PermissionsInput.root = '#circulation_user';
 		PermissionsInput.search = CirculationSearch;
 	</script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body>

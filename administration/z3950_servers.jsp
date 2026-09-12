@@ -23,6 +23,7 @@
 		Z3950Input.root = '#z3950_servers';
 		Z3950Input.search = Z3950Search;
 	</script>
+	<link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
 <layout:body>
