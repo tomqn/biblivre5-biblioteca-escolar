@@ -2147,3 +2147,8 @@ noscript ul li {
 fieldset > legend {
   white-space: nowrap;
 }
+/* Ocultado a pedido da escola: widget Itaú + relógio + carrossel de logos de apoio */
+#logo_sponsor,
+#logo_support {
+    display: none !important;
+}
