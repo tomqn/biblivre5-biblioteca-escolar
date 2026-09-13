@@ -1251,7 +1251,7 @@
     <link rel="stylesheet" type="text/css" href="static/styles/biblivre.modern.css" />
 </layout:head>
 
-<layout:body>
+<layout:body banner="false">
 <%
 ExtendedRequest req = (ExtendedRequest) request;
 
@@ -1423,7 +1423,7 @@ if (!req.isGlobalSchema()) {
             String sqlMaisLidos =
                 "SELECT top_books.record_id, top_books.total_lido, " +
                 "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = top_books.record_id AND indexing_group_id = 3 LIMIT 1) AS titulo, " +
-                "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = top_books.record_id AND indexing_group_id = 2 LIMIT 1) AS autor " +
+                "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = top_books.record_id AND indexing_group_id = 1 LIMIT 1) AS autor " +
                 "FROM (SELECT bh.record_id, COUNT(l.id) AS total_lido FROM " + schema + ".lendings l " +
                 "JOIN " + schema + ".biblio_holdings bh ON l.holding_id = bh.id " +
                 "GROUP BY bh.record_id ORDER BY total_lido DESC LIMIT 10) AS top_books";
@@ -1459,6 +1459,144 @@ if (!req.isGlobalSchema()) {
             closeQuietly(st1);
         }
         if (!hasMaisLidos) { %><div class="no-results">Nenhum empréstimo registrado ainda.</div><% }
+        %>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         1.5 QUEM PEGOU ESSE, TAMBÉM PEGOU (co-empréstimo)
+         =========================================================
+         Ancorado no livro mais emprestado de todos os tempos (mesmo
+         #1 de "Mais lidos"). Mostra os livros que os mesmos leitores
+         desse livro também levaram emprestado. Precisa de volume de
+         empréstimos pra ficar confiável — em acervo com pouco
+         histórico, pode aparecer vazio, e isso é esperado.
+
+         Âncora dinâmica: sorteia entre os 30 livros mais emprestados
+         a cada carregamento de página (sem semente fixa) — muda toda
+         vez que a página recarrega. -->
+    <%
+    int anchorRecordId = -1;
+    String anchorTitulo = null;
+    Statement stAnchor = null;
+    ResultSet rsAnchor = null;
+    try {
+        String sqlAnchor =
+            "SELECT bh.record_id AS record_id " +
+            "FROM " + schema + ".lendings l " +
+            "JOIN " + schema + ".biblio_holdings bh ON l.holding_id = bh.id " +
+            "GROUP BY bh.record_id " +
+            "ORDER BY COUNT(l.id) DESC " +
+            "LIMIT 30";
+        stAnchor = conn.createStatement();
+        rsAnchor = stAnchor.executeQuery(sqlAnchor);
+        List<Integer> candidatosAncora = new ArrayList<Integer>();
+        while (rsAnchor.next()) {
+            candidatosAncora.add(rsAnchor.getInt("record_id"));
+        }
+        if (!candidatosAncora.isEmpty()) {
+            int indiceSorteado = (int) (Math.random() * candidatosAncora.size());
+            anchorRecordId = candidatosAncora.get(indiceSorteado);
+        }
+    } catch (Exception ignored) {
+    } finally {
+        closeQuietly(rsAnchor);
+        closeQuietly(stAnchor);
+    }
+
+    if (anchorRecordId > 0) {
+        PreparedStatement psTitulo = null;
+        ResultSet rsTitulo = null;
+        try {
+            psTitulo = conn.prepareStatement(
+                "SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = ? AND indexing_group_id = 3 LIMIT 1");
+            psTitulo.setInt(1, anchorRecordId);
+            rsTitulo = psTitulo.executeQuery();
+            if (rsTitulo.next()) {
+                anchorTitulo = rsTitulo.getString("phrase");
+            }
+        } catch (Exception ignored) {
+        } finally {
+            closeQuietly(rsTitulo);
+            closeQuietly(psTitulo);
+        }
+    }
+    if (anchorTitulo == null) anchorTitulo = "livro em alta";
+    %>
+    <div class="library-section section-popular">
+        <div class="library-section-header">
+            <div class="library-section-title-area">
+                <div class="library-section-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M2 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+                </div>
+                <div>
+                    <h2 class="library-section-title">Quem leu <%= StringEscapeUtils.escapeHtml4(anchorTitulo) %>, também leu</h2>
+                    <div class="library-section-subtitle">Escolhas de outros leitores que pegaram o mesmo livro</div>
+                </div>
+            </div>
+            <div class="library-section-badge">Recomendado</div>
+        </div>
+        <div class="library-books-scroll">
+        <%
+        boolean hasCoEmprestimos = false;
+        if (anchorRecordId > 0) {
+            PreparedStatement psCo = null;
+            ResultSet rsCo = null;
+            try {
+                String sqlCo =
+                    "WITH usuarios_do_anchor AS ( " +
+                    "  SELECT DISTINCT l.user_id " +
+                    "  FROM " + schema + ".lendings l " +
+                    "  JOIN " + schema + ".biblio_holdings bh ON l.holding_id = bh.id " +
+                    "  WHERE bh.record_id = ? " +
+                    ") " +
+                    "SELECT bh2.record_id AS record_id, COUNT(DISTINCT l2.user_id) AS total_coleitores, " +
+                    "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = bh2.record_id AND indexing_group_id = 3 LIMIT 1) AS titulo, " +
+                    "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = bh2.record_id AND indexing_group_id = 1 LIMIT 1) AS autor " +
+                    "FROM " + schema + ".lendings l2 " +
+                    "JOIN " + schema + ".biblio_holdings bh2 ON l2.holding_id = bh2.id " +
+                    "JOIN usuarios_do_anchor u ON l2.user_id = u.user_id " +
+                    "WHERE bh2.record_id != ? " +
+                    "GROUP BY bh2.record_id " +
+                    "ORDER BY total_coleitores DESC " +
+                    "LIMIT 6";
+                psCo = conn.prepareStatement(sqlCo);
+                psCo.setInt(1, anchorRecordId);
+                psCo.setInt(2, anchorRecordId);
+                rsCo = psCo.executeQuery();
+                while (rsCo.next()) {
+                    hasCoEmprestimos = true;
+                    int recordId = rsCo.getInt("record_id");
+                    String title = rsCo.getString("titulo") != null ? rsCo.getString("titulo") : "Sem título";
+                    String author = rsCo.getString("autor") != null ? rsCo.getString("autor") : "Autor desconhecido";
+                    String capaUrl = obterUrlCapa(conn, schema, recordId, title, todasMedias);
+                    boolean disp = isDisponivel(conn, schema, recordId);
+        %>
+            <a class="library-book-card" href="?action=search_bibliographic#query=<%= URLEncoder.encode(title, "UTF-8") %>&material=all">
+                <div class="library-book-cover" data-title="<%= StringEscapeUtils.escapeHtml4(title) %>" data-author="<%= StringEscapeUtils.escapeHtml4(author) %>">
+                    <span class="status-badge <%= disp ? "status-available" : "status-lent" %>">
+                        <svg width="6" height="6" viewBox="0 0 6 6" aria-hidden="true" focusable="false"><circle cx="3" cy="3" r="3" fill="currentColor"/></svg>
+                        <%= disp ? "Disponível" : "Emprestado" %>
+                    </span>
+                    <% if (capaUrl != null) { %>
+                        <img src="<%= capaUrl %>" alt="Capa de <%= StringEscapeUtils.escapeHtml4(title) %>" loading="lazy" decoding="async" onerror="handleImgError(this)" />
+                    <% } %>
+                </div>
+                <div class="library-book-title" title="<%= StringEscapeUtils.escapeHtml4(title) %>"><%= StringEscapeUtils.escapeHtml4(title) %></div>
+                <div class="library-book-author" title="<%= StringEscapeUtils.escapeHtml4(author) %>"><%= StringEscapeUtils.escapeHtml4(author) %></div>
+                <div class="library-book-footer"><%= rsCo.getInt("total_coleitores") %> leitores em comum</div>
+            </a>
+        <%
+                }
+            } catch (Exception ignored) {
+            } finally {
+                closeQuietly(rsCo);
+                closeQuietly(psCo);
+            }
+        }
+        if (!hasCoEmprestimos) {
+        %><div class="no-results">Ainda não há empréstimos suficientes pra recomendar livros parecidos.</div><%
+        }
         %>
         </div>
     </div>
@@ -1611,14 +1749,14 @@ if (!req.isGlobalSchema()) {
                     sqlTheme =
                         "SELECT br.id AS record_id, " +
                         "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = br.id AND indexing_group_id = 3 LIMIT 1) AS titulo, " +
-                        "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = br.id AND indexing_group_id = 2 LIMIT 1) AS autor " +
+                        "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = br.id AND indexing_group_id = 1 LIMIT 1) AS autor " +
                         "FROM " + schema + ".biblio_records br " +
                         "WHERE br.id IN (SELECT id FROM " + schema + ".biblio_records ORDER BY RANDOM() LIMIT 10)";
                 } else {
                     sqlTheme =
                         "SELECT matched.record_id, " +
                         "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = matched.record_id AND indexing_group_id = 3 LIMIT 1) AS titulo, " +
-                        "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = matched.record_id AND indexing_group_id = 2 LIMIT 1) AS autor " +
+                        "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = matched.record_id AND indexing_group_id = 1 LIMIT 1) AS autor " +
                         "FROM (" +
                         "   SELECT s.record_id FROM " + schema + ".biblio_idx_sort s " +
                         "   WHERE s.phrase ~* '" + regex + "' " +
@@ -1690,7 +1828,7 @@ if (!req.isGlobalSchema()) {
             String sqlNovidades =
                 "SELECT top_books.record_id, top_books.data_cadastro, " +
                 "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = top_books.record_id AND indexing_group_id = 3 LIMIT 1) AS titulo, " +
-                "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = top_books.record_id AND indexing_group_id = 2 LIMIT 1) AS autor " +
+                "(SELECT phrase FROM " + schema + ".biblio_idx_sort WHERE record_id = top_books.record_id AND indexing_group_id = 1 LIMIT 1) AS autor " +
                 "FROM (SELECT record_id, TO_CHAR(MIN(created), 'DD/MM/YYYY') AS data_cadastro FROM " + schema + ".biblio_holdings " +
                 "WHERE record_id IS NOT NULL GROUP BY record_id ORDER BY MIN(created) DESC LIMIT 10) AS top_books";
 
