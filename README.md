@@ -1,6 +1,6 @@
 # Biblioteca Escolar — Biblivre Reestruturado
 
-Reestruturação visual e de interface do **Biblivre 4** para a Biblioteca
+Reestruturação visual e de interface do **Biblivre 4/5** para a Biblioteca
 Escolar.
 
 ⚠️ **Isto NÃO é um patch de personalização.** É uma **versão derivada
