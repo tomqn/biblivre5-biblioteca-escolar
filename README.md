@@ -2,6 +2,7 @@
 
 Reestruturação visual e de interface do **Biblivre 4/5** para a Biblioteca
 Escolar.
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/9eb6f20e-9a80-48ae-955b-89f73e04eb02" />
 
 ⚠️ **Isto NÃO é um patch de personalização.** É uma **versão derivada
 completa** do Biblivre, com CSS reescrito e páginas JSP modificadas
@@ -34,6 +35,7 @@ completa está organizada da mesma forma que o Biblivre oficial, mas com:
   páginas de busca, circulação, catalogação e administração)
 - **Scripts JavaScript** novos para comportamentos específicos
   (auto-hide do cabeçalho, item "Início" no menu, botão de voltar)
+- **Capa dos livros** Ao adicionar a capa do livro em arquivos digitais (equivalente ao campo 856 do MARC) a base de dados é cruzada com o titulo e adiciona capas que aparecerão na página inicial (infelizmente só consegui configurar pra lá, não aparece nos resultados das pesquisas pela limitação do proprio biblivre)
 
 O framework original, banco de dados e regras de negócio continuam
 intactos — apenas a camada de apresentação foi reestruturada.
