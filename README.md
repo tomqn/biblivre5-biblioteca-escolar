@@ -2,7 +2,8 @@
 
 Reestruturação visual e de interface do **Biblivre 4/5** para a Biblioteca
 Escolar.
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/9eb6f20e-9a80-48ae-955b-89f73e04eb02" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/9f0bbf6d-25b9-4cab-bd72-2b635598e994" />
+
 
 ⚠️ **Isto NÃO é um patch de personalização.** É uma **versão derivada
 completa** do Biblivre, com CSS reescrito e páginas JSP modificadas
