@@ -1,7 +1,7 @@
-# Biblioteca Nair Magalhães Guerra — Biblivre Reestruturado
+# Biblioteca Escolar — Biblivre Reestruturado
 
 Reestruturação visual e de interface do **Biblivre 4** para a Biblioteca
-Nair Magalhães Guerra.
+Escolar.
 
 ⚠️ **Isto NÃO é um patch de personalização.** É uma **versão derivada
 completa** do Biblivre, com CSS reescrito e páginas JSP modificadas
