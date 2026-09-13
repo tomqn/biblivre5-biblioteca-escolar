@@ -49,7 +49,7 @@ intactos — apenas a camada de apresentação foi reestruturada.
 - Estante temática com 11 categorias navegáveis (Fantasia, HQ,
   Animais, Terror, Ciência, Clássicos, etc.)
 - Rankings: mais lidos, desafio das turmas, clube da leitura
-- Painel de atrasos visível apenas para usuários logados
+- Painel de atrasos visível apenas para administradores logados
 - Cabeçalho com auto-hide: sobe ao tirar o mouse, desce ao passar
   na faixa superior da tela
 - Item "Início" no menu de navegação, presente em todas as páginas
