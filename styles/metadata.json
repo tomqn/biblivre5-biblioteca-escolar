@@ -1,0 +1,6 @@
+{
+  "name": "Biblivre 5 - Biblioteca Escolar",
+  "description": "Tema moderno e interface para o Biblivre 5 Biblioteca Escolar com catálogo, circulação, catalogação e administração.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,126 @@
+.backup .buttons, .restore .buttons, .reinstall .buttons, .multischema .buttons {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.backup .buttons a, .restore .buttons a, .reinstall .buttons a, .multischema .buttons a {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+.backup .last_backups, .backup .found_backups, .restore .last_backups, .restore .found_backups, .reinstall .last_backups, .reinstall .found_backups, .multischema .last_backups, .multischema .found_backups {
+  background: #ebebeb;
+  margin: 10px;
+  padding: 10px 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-background-clip: padding-box;
+  -mox-background-clip: padding-box;
+  -o-background-clip: padding-box;
+  -ms-background-clip: padding-box;
+  background-clip: padding-box;
+}
+.backup .last_backups p, .backup .found_backups p, .restore .last_backups p, .restore .found_backups p, .reinstall .last_backups p, .reinstall .found_backups p, .multischema .last_backups p, .multischema .found_backups p {
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0 10px 10px 10px;
+}
+.backup .last_backups p:last-child, .backup .found_backups p:last-child, .restore .last_backups p:last-child, .restore .found_backups p:last-child, .reinstall .last_backups p:last-child, .reinstall .found_backups p:last-child, .multischema .last_backups p:last-child, .multischema .found_backups p:last-child {
+  margin-bottom: 0;
+}
+.backup .last_backups_list, .backup .found_backups_list, .restore .last_backups_list, .restore .found_backups_list, .reinstall .last_backups_list, .reinstall .found_backups_list, .multischema .last_backups_list, .multischema .found_backups_list {
+  margin-top: 20px;
+}
+.backup .last_backups_list a, .backup .found_backups_list a, .restore .last_backups_list a, .restore .found_backups_list a, .reinstall .last_backups_list a, .reinstall .found_backups_list a, .multischema .last_backups_list a, .multischema .found_backups_list a {
+  padding-left: 45px;
+  padding-right: 10px;
+  line-height: 25px;
+  font-size: 12px;
+  color: #2a2a2a;
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+.backup .last_backups_list a:hover, .backup .found_backups_list a:hover, .restore .last_backups_list a:hover, .restore .found_backups_list a:hover, .reinstall .last_backups_list a:hover, .reinstall .found_backups_list a:hover, .multischema .last_backups_list a:hover, .multischema .found_backups_list a:hover {
+  background-color: #DDD4C4;
+}
+.backup .last_backups_list .hidden_backup, .backup .found_backups_list .hidden_backup, .restore .last_backups_list .hidden_backup, .restore .found_backups_list .hidden_backup, .reinstall .last_backups_list .hidden_backup, .reinstall .found_backups_list .hidden_backup, .multischema .last_backups_list .hidden_backup, .multischema .found_backups_list .hidden_backup {
+  display: none;
+}
+.backup .last_backups_list .last_backup, .backup .found_backups_list .last_backup, .restore .last_backups_list .last_backup, .restore .found_backups_list .last_backup, .reinstall .last_backups_list .last_backup, .reinstall .found_backups_list .last_backup, .multischema .last_backups_list .last_backup, .multischema .found_backups_list .last_backup {
+  line-height: 40px;
+  font-size: 14px;
+  background: #ddd4c4 url("../images/last_backup.png") no-repeat 10px 50%;
+}
+.backup .last_backups_list .last_backup a, .backup .found_backups_list .last_backup a, .restore .last_backups_list .last_backup a, .restore .found_backups_list .last_backup a, .reinstall .last_backups_list .last_backup a, .reinstall .found_backups_list .last_backup a, .multischema .last_backups_list .last_backup a, .multischema .found_backups_list .last_backup a {
+  color: #5C323E;
+}
+.backup .last_backups_list .last_backup_description, .backup .found_backups_list .last_backup_description, .restore .last_backups_list .last_backup_description, .restore .found_backups_list .last_backup_description, .reinstall .last_backups_list .last_backup_description, .reinstall .found_backups_list .last_backup_description, .multischema .last_backups_list .last_backup_description, .multischema .found_backups_list .last_backup_description {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 14px;
+}
+.backup .last_backups_list .backup_never_downloaded, .backup .found_backups_list .backup_never_downloaded, .restore .last_backups_list .backup_never_downloaded, .restore .found_backups_list .backup_never_downloaded, .reinstall .last_backups_list .backup_never_downloaded, .reinstall .found_backups_list .backup_never_downloaded, .multischema .last_backups_list .backup_never_downloaded, .multischema .found_backups_list .backup_never_downloaded {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 14px;
+  color: #FF0000;
+}
+
+.reindex .buttons {
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.reindex .buttons a {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.reports {
+  padding: 10px 0px 10px 0px;
+}
+.reports .title {
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 14px;
+}
+.reports .buttons {
+  text-align: center;
+}
+.reports .buttons a {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+#backup_popup .progress_bar {
+  margin-bottom: 40px;
+}
+
+#authorDiv .search_box .simple_search .query .small_input, #userDiv .search_box .simple_search .query .small_input, #catalogingDiv .search_box .simple_search .query .small_input {
+  margin-left: 15px;
+  width: 550px;
+}
+#authorDiv .paging_bar, #userDiv .paging_bar, #catalogingDiv .paging_bar {
+  margin: 10px 15px;
+}
+
+.record_author, .record_user, .record_cataloging {
+  border-left: 6px solid #44749D;
+  border-bottom: 1px solid #44749D;
+  margin-top: 15px;
+  margin-left: 15px;
+  padding: 8px 10px;
+  min-height: 40px;
+}
+.record_author label, .record_user label, .record_cataloging label {
+  font-weight: bold;
+}
